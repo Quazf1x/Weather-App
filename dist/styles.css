@@ -2,10 +2,12 @@
   --primary-1:#5f229c;
   --primary-2: #ed8ab5;
   --transparent-white:#ffffff33;
+  --white: #ffffff;
 }
 
 *, *::after, *::before{
   box-sizing: border-box;
+  margin: 0;
 }
 
 html, body {
@@ -14,11 +16,19 @@ html, body {
 }
 
 body {
-  font-family: sans-serif;
-  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  color: var(--white);
   height: 100svh;
   width: 100svw;
 }
+
+.border-both-sides {
+  border-left: 2px solid var(--white);
+  border-right: 2px solid var(--white);
+}
+
+/*Left side header*/
 
 .wrapper {
   background-image: linear-gradient(45deg, var(--primary-2) 25%, var(--primary-1));
@@ -27,6 +37,8 @@ body {
   height: 100%;
   width: 100%;
 }
+
+/*Metric system switch*/
 
 #metric-toggle {
   width: 0;
@@ -41,6 +53,7 @@ body {
   cursor: pointer;
   display: inline-block;
   position: relative;
+  user-select:none;
   height: 2rem;
   width: 4rem;
 }
@@ -85,4 +98,45 @@ body {
 
 .left-side-header img {
   opacity: .5;
+}
+
+/*Left side middle*/
+
+.left-side-middle {
+  padding: 3rem 3rem 4rem 3rem;
+}
+
+.degree-display {
+  font-size: 5rem;
+}
+
+.current-metric {
+  font-size: 3rem;
+  vertical-align: top;
+}
+
+.current-date {
+  font-size: 1.7rem;
+  margin-top: 2rem;
+}
+
+.misc-info {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+  width: fit-content;
+}
+
+.misc-category-wrapper {
+  align-items: center;
+  display: flex;
+  margin: 0 1rem;
+  width: 8rem;
+  justify-content: space-evenly;
+}
+
+/*Right side*/
+
+.right-side {
+  background-color: var(--transparent-white);
 }

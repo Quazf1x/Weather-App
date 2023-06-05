@@ -5,7 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+  <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/solid.css">
+  <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+
   <script defer type="module" src="../src/index.js"></script>
   <title>Weather</title>
 </head>
@@ -20,6 +26,30 @@
          <span class="fahrenheit">F</span>
         </label>
        </header>
+       <div class="left-side-middle">
+        <p class="degree-display">
+          <span class="current-degree">26</span>
+          <span class="current-metric"><sup>o</sup>C</span>
+        </p>
+        <p class="current-date">14th Mar 22</p>
+        <div class="misc-info">
+          <div class="misc-category-wrapper">
+            <i class="fa-solid fa-wind  fa-sm" style="color: #ffffff;"></i>
+            <p>Wind</p>
+            <span class="wind-value">10 km/h</span>
+          </div>
+          <div class="misc-category-wrapper border-both-sides">
+            <i class="fa-solid fa-droplet fa-sm" style="color: #ffffff;"></i>
+            <p>Hum</p>
+            <span class="humidity-value">54%</span>
+          </div>
+          <div class="misc-category-wrapper">
+            <i class="fa-solid fa-cloud-showers-heavy fa-sm" style="color: #ffffff;"></i>
+            <p>Rain</p>
+            <span class="rain-value">0.2%</span>
+          </div>
+        </div>
+       </div>
     </section>
     <section class="right-side"></section>
   </main>
