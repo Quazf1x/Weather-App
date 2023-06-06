@@ -249,6 +249,13 @@ body {
 
 .right-side-bottom-wrapper {
   display: grid;
-  grid-template: 5rem 5rem / 1fr 1fr;
+  grid-template: 10rem 10rem / 1fr 1fr;
   justify-items: center;
+}
+
+.right-side-bottom-wrapper > div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
 }
