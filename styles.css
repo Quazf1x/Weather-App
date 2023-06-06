@@ -29,6 +29,14 @@ body {
   border-right: 2px solid var(--white);
 }
 
+.scroll-snap {
+  scroll-snap-type: inline mandatory;
+}
+
+.scroll-snap > * {
+  scroll-snap-align: start;
+}
+
 /*Left side header*/
 
 .wrapper {
@@ -144,6 +152,7 @@ body {
   overflow-x: scroll;
   width: 28rem;
   margin-top: 5rem;
+  padding-bottom: 1rem;
 }
 
 .weather-day-div {
@@ -160,8 +169,57 @@ body {
   min-width: 6rem;
 }
 
+.left-side-scroll-wrapper::-webkit-scrollbar {
+  height: .5rem;
+}
+
+.left-side-scroll-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 2rem;
+  background-color: var(--white)
+}
+
+.left-side-scroll-wrapper::-webkit-scrollbar-track {
+  height: 1rem;
+  border-radius: 2rem;
+  margin-block: 10rem;
+  background-color: var(--transparent-white);
+}
+
 /*Right side*/
 
 .right-side {
   background-color: var(--transparent-white);
+}
+
+.right-side-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 5rem;
+}
+
+.right-side-header > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 11rem;
+}
+
+.right-side-header > div > h1 {
+  font-weight: 300;
+}
+
+#find-city-button {
+  background-color: var(--transparent-white);
+  border: 1px solid var(--white);
+  border-radius: .6rem;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0 .5rem;
+  transition: all .2s;
+}
+
+#find-city-button:active {
+  transform: scale(.8);
 }
