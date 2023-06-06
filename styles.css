@@ -146,10 +146,13 @@ body {
 
 /*Future days cards*/
 
-.left-side-scroll-wrapper {
+#scroll-left-side {
+  overflow-x: scroll;
+}
+
+.scroll-wrapper {
   display: flex;
   white-space: nowrap;
-  overflow-x: scroll;
   width: 28rem;
   margin-top: 5rem;
   padding-bottom: 1rem;
@@ -169,16 +172,16 @@ body {
   min-width: 6rem;
 }
 
-.left-side-scroll-wrapper::-webkit-scrollbar {
+.scroll-wrapper::-webkit-scrollbar {
   height: .5rem;
 }
 
-.left-side-scroll-wrapper::-webkit-scrollbar-thumb {
+.scroll-wrapper::-webkit-scrollbar-thumb {
   border-radius: 2rem;
   background-color: var(--white)
 }
 
-.left-side-scroll-wrapper::-webkit-scrollbar-track {
+.scroll-wrapper::-webkit-scrollbar-track {
   height: 1rem;
   border-radius: 2rem;
   margin-block: 10rem;
@@ -222,4 +225,30 @@ body {
 
 #find-city-button:active {
   transform: scale(.8);
+}
+
+#scroll-right-side {
+  width: 70%;
+  justify-content: space-around;
+  margin: 5rem auto 0 auto;
+}
+
+.line-breaker {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.line-break {
+  height: 1px;
+  background-color: var(--transparent-white);
+  border: none;
+  margin: 2rem 1rem 2rem 0; 
+  width: 80%;
+}
+
+.right-side-bottom-wrapper {
+  display: grid;
+  grid-template: 5rem 5rem / 1fr 1fr;
+  justify-items: center;
 }
