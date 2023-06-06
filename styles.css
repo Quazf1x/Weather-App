@@ -21,6 +21,7 @@ body {
   color: var(--white);
   height: 100svh;
   width: 100svw;
+  overflow: hidden;
 }
 
 .border-both-sides {
@@ -93,6 +94,7 @@ body {
 .left-side-header {
   align-items: center;
   display: flex;
+  width: 100%;
   justify-content: space-around;
 }
 
@@ -103,14 +105,14 @@ body {
 /*Left side middle*/
 
 .left-side-middle {
-  padding: 3rem 3rem 4rem 3rem;
+  padding: 3rem 3vw 4rem 3vw;
 }
 
 .degree-display {
   font-size: 5rem;
 }
 
-.current-metric {
+.current-weather {
   font-size: 3rem;
   vertical-align: top;
 }
@@ -124,15 +126,38 @@ body {
   display: flex;
   justify-content: space-around;
   margin-top: 3rem;
-  width: fit-content;
+  width: 70%;
 }
 
 .misc-category-wrapper {
   align-items: center;
   display: flex;
-  margin: 0 1rem;
-  width: 8rem;
+  width: 100%;
   justify-content: space-evenly;
+}
+
+/*Future days cards*/
+
+.left-side-scroll-wrapper {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: scroll;
+  width: 28rem;
+  margin-top: 5rem;
+}
+
+.weather-day-div {
+  align-items: center;
+  background-color: var(--transparent-white);
+  border-radius: 1.5rem;
+  display: grid;
+  grid-template-rows: 4rem 1fr 5rem;
+  justify-items: center;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  height: 12rem;
+  width: 6rem;
+  min-width: 6rem;
 }
 
 /*Right side*/
