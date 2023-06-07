@@ -44,7 +44,7 @@ body {
   background-image: linear-gradient(45deg, var(--primary-2) 25%, var(--primary-1));
   display: grid;
   grid-template: 1fr / 1fr 1fr;
-  height: 100%;
+  height: 100;
   width: 100%;
 }
 
@@ -114,7 +114,7 @@ body {
 /*Left side middle*/
 
 .left-side-middle {
-  padding: 3rem 3vw 4rem 3vw;
+  padding: 3rem 3vw 0 3vw;
 }
 
 .degree-display {
@@ -294,4 +294,32 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
+}
+
+@media only screen and (max-width:950px) {
+
+  body {
+  overflow:unset;
+  height: 100%;
+  width: 100%;
+  }
+ 
+  .wrapper {
+    grid-template: 1fr 1fr / 100%;
+  }
+
+  .misc-info {
+    width: 100%;
+  }
+
+  .scroll-wrapper {
+    width: 100%;
+  }
+
+  #scroll-right-side {
+    overflow-x: scroll;
+    justify-content: unset;
+    margin: 2rem auto;
+    width: 90%;
+  }
 }
