@@ -2,6 +2,7 @@
   --primary-1:#5f229c;
   --primary-2: #ed8ab5;
   --transparent-white:#ffffff33;
+  --transparent-purple: #a077c1;
   --white: #ffffff;
 }
 
@@ -162,6 +163,7 @@ body {
   align-items: center;
   background-color: var(--transparent-white);
   border-radius: 1.5rem;
+  cursor: pointer;
   display: grid;
   grid-template-rows: 4rem 1fr 5rem;
   justify-items: center;
@@ -170,6 +172,11 @@ body {
   height: 12rem;
   width: 6rem;
   min-width: 6rem;
+  transition: .2s;
+}
+
+.weather-day-div:hover {
+  box-shadow: inset 0 0 5px var(--white);
 }
 
 .scroll-wrapper::-webkit-scrollbar {
@@ -201,31 +208,60 @@ body {
   height: 5rem;
 }
 
-.right-side-header > div {
+.location-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 11rem;
 }
 
-.right-side-header > div > h1 {
+.location-wrapper > h1 {
   font-weight: 300;
 }
 
-#find-city-button {
-  background-color: var(--transparent-white);
-  border: 1px solid var(--white);
-  border-radius: .6rem;
-  color: var(--white);
-  cursor: pointer;
-  font-size: 2rem;
-  padding: 0 .5rem;
-  transition: all .2s;
+.find-city-wrapper {
+  position: relative;
+  width: 30%;
+
+  --border-radius:.6rem;
 }
 
-#find-city-button:active {
-  transform: scale(.8);
+#find-city-input {
+  background-color: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
+  border-radius: var(--border-radius);
+  font-size: 1.2rem;
+  height: 2.3rem;
+  width: 100%;
+  transform: scaleX(0) translateX(5rem);
+  transition: all ease-in-out .25s;
 }
+
+#find-city-input:focus {
+  outline: none;
+  transform: scaleX(1) translateX(0);
+}
+
+#find-city-input:focus ~ #find-city-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  right: 0;
+}
+
+#find-city-button {
+  background-color: var(--transparent-purple);
+  border: 1px solid var(--white);
+  border-radius: var(--border-radius);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 1.95rem;
+  padding: 0 .5rem;
+  position: absolute;
+  right: 30%;
+  transition: all .25s;
+}
+
 
 #scroll-right-side {
   width: 70%;
