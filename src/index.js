@@ -1,7 +1,5 @@
+import { setUpPage } from "./modules/UI.js";
+import { makeApiRequest } from "./modules/API.js";
 
-const button = document.querySelector('#find-city-button');
-const input = document.querySelector('#find-city-input');
-
-button.addEventListener('click', () => {
-  input.focus();
-});
+const data = await makeApiRequest();
+setUpPage(data);
