@@ -212,10 +212,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 11rem;
+  width: fit-content;
 }
 
-.location-wrapper > h1 {
+.location-wrapper > i {
+  margin-right: .5rem;
+}
+
+.current-location {
   font-weight: 300;
 }
 

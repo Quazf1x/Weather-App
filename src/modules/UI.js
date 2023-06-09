@@ -13,11 +13,12 @@ export function setUpPage(data) {
     todaysHoursArray[0][16],
     todaysHoursArray[0][20]
   ];
-  console.log(displayHours);
   addEventListeners();
-  renderCurrentWeather(data.current);
+  renderCurrentWeather(data);
+  renderLocation(data.location);
   renderAllFutureDays(data.forecast.forecastday);
   renderTodaysForecast(displayHours);
+  renderTimeDetails(todaysHoursArray[0][8]);
 };
 
 function createHTMLElement(type, id, classesList, content) {
@@ -83,7 +84,7 @@ function addStyles(element, classesList) {
   });
 }
 
-function renderCurrentWeather(currentData) {
+function renderCurrentWeather(data) {
   const currentDegreeDisplay = document.querySelector('.current-degree');
   const currentDateDisplay = document.querySelector('.current-date');
   const currentMetric = document.querySelector('.current-metric');
@@ -91,18 +92,18 @@ function renderCurrentWeather(currentData) {
   const currentHumDisplay = document.querySelector('.humidity-value');
   const currentRainDisplay = document.querySelector('.rain-value');
 
-  currentDateDisplay.textContent = currentData.last_updated.replace(/-/g, '.').slice(0,-5);
-  currentHumDisplay.textContent = `${currentData.humidity} %`;
-  currentRainDisplay.textContent = `${currentData.cloud} %`; // ???
+  currentDateDisplay.textContent = data.current.last_updated.replace(/-/g, '.').slice(0,-5);
+  currentHumDisplay.textContent = `${data.current.humidity} %`;
+  currentRainDisplay.textContent = `${data.forecast.forecastday[0].day.daily_chance_of_rain} %`; // ???
   if(toggleMetric.checked) {
     currentMetric.textContent = 'F';
-    currentDegreeDisplay.textContent = Math.floor(currentData.temp_f);
-    currentWindDisplay.textContent = `${Math.floor(currentData.wind_mph)} Mph`;
+    currentDegreeDisplay.textContent = Math.floor(data.current.temp_f);
+    currentWindDisplay.textContent = `${Math.floor(data.current.wind_mph)} Mph`;
   }
   else {
     currentMetric.textContent = 'C';
-    currentDegreeDisplay.textContent = Math.floor(currentData.temp_c);
-    currentWindDisplay.textContent = `${Math.floor(currentData.wind_kph)} km/h`;
+    currentDegreeDisplay.textContent = Math.floor(data.current.temp_c);
+    currentWindDisplay.textContent = `${Math.floor(data.current.wind_kph)} km/h`;
   }
 }
 
@@ -194,6 +195,33 @@ function renderTodaysForecast(timeArray) {
   timeArray.forEach(time => {
     renderTodayCard(time);
   })
+}
+
+function renderLocation(locationData) {
+  const cityDisplay = document.querySelector('.current-city');
+  const countryDisplay = document.querySelector('.current-country');
+
+  cityDisplay.textContent = locationData.name;
+  countryDisplay.textContent = locationData.country;
+}
+
+function renderTimeDetails(hourData) {
+  const humidityDisplay = document.querySelector('.set-time-humidity');
+  const rainChanceDisplay = document.querySelector('.set-time-rain');
+  const windSpeedDisplay = document.querySelector('.set-time-wind');
+  const windDirDisplay = document.querySelector('.set-wind-dir');
+
+  rainChanceDisplay.textContent = `${hourData.chance_of_rain} %`
+  humidityDisplay.textContent = `${hourData.humidity} %`;
+  windDirDisplay.textContent = hourData.wind_dir;
+
+  if(toggleMetric.checked) {
+    windSpeedDisplay.textContent = `${hourData.wind_mph} mph`;
+  }
+  else {
+    windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
+  }
+
 }
 
 function addEventListeners() {
