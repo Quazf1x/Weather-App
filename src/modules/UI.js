@@ -6,9 +6,18 @@ import { doc } from 'prettier';
 const toggleMetric = document.querySelector('#metric-toggle');
 
 export function setUpPage(data) {
+  const todaysHoursArray = [data.forecast.forecastday[0].hour];
+  const displayHours = [
+    todaysHoursArray[0][8],
+    todaysHoursArray[0][12],
+    todaysHoursArray[0][16],
+    todaysHoursArray[0][20]
+  ];
+  console.log(displayHours);
   addEventListeners();
   renderCurrentWeather(data.current);
   renderAllFutureDays(data.forecast.forecastday);
+  renderTodaysForecast(displayHours);
 };
 
 function createHTMLElement(type, id, classesList, content) {
@@ -139,14 +148,82 @@ function renderFutureDay(dataForecast) {
 }
 
 export function clearForecasts() {
-  const weatherDisplay = document.querySelector('#scroll-left-side');
-  weatherDisplay.innerHTML = '';
+  const weatherForecastDisplay = document.querySelector('#scroll-left-side');
+  const weatherTodayDisplay = document.querySelector('#scroll-right-side');
+  weatherForecastDisplay.innerHTML = '';
+  weatherTodayDisplay.innerHTML = '';
 }
 
 function renderAllFutureDays(forecastArray) {
   forecastArray.forEach(forecast => {
-    console.log(forecast);
     renderFutureDay(forecast);
+  })
+};
+
+function renderTodayCard(hourData) {
+  const weatherDisplay = document.querySelector('#scroll-right-side');
+  const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
+  const weatherNumber = createHTMLElement('p', null, null, null);
+  const weatherMetric = createHTMLElement('span', null, ['current-metric']);
+  const weatherIcon = createHTMLElement('i', null, ['fa-solid', 'fa-xl'], null);
+  const dayTimeDisplay = createHTMLElement('p', null, ['week-day'], hourData.time.slice(-5));
+
+  const weatherCondition = hourData.condition.text;
+  switch(weatherCondition) {    
+    case 'Sunny':
+      addStyles(weatherIcon, ['fa-sun']);
+    break;
+
+    case 'Partly cloudy':
+      addStyles(weatherIcon, ['fa-cloud-sun']);
+    break;
+
+    case 'Mist':
+    case 'Cloudy':
+      addStyles(weatherIcon, ['fa-cloud']);
+    break;
+
+    case 'Patchy rain possible':
+    case 'Light rain':
+    case 'Moderate rain':
+      addStyles(weatherIcon, ['fa-cloud-rain']);
+    break;
+
+    case 'Heavy rain':
+    case 'Heavy rain at times':
+      addStyles(weatherIcon, ['fa-cloud-showers-heavy']);
+    break;
+
+    case 'Light snow':
+    case 'Moderate snow':
+    case 'Heavy snow':
+      addStyles(weatherIcon, ['fa-snowflake']);
+    break;
+
+    default:
+      addStyles(weatherIcon, ['fa-cloud']);
+    break;
+  };
+
+  weatherIcon.style.color = 'white';
+
+  if(toggleMetric.checked) {
+    weatherNumber.textContent = Math.floor(hourData.temp_f);
+    weatherMetric.textContent = ' F';
+  }
+  else {
+    weatherNumber.textContent = Math.floor(hourData.temp_c);
+    weatherMetric.textContent = ' C';
+  };
+
+  weatherNumber.appendChild(weatherMetric);
+  weatherDiv.append(dayTimeDisplay, weatherIcon, weatherNumber);
+  weatherDisplay.appendChild(weatherDiv);
+}
+
+function renderTodaysForecast(timeArray) {
+  timeArray.forEach(time => {
+    renderTodayCard(time);
   })
 }
 
