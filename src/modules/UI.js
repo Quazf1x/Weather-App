@@ -32,6 +32,51 @@ function createHTMLElement(type, id, classesList, content) {
     return element;
 };
 
+function renderWeatherIcons(weatherCondition, icon) {
+  switch(weatherCondition) {    
+    case 'Sunny':
+      addStyles(icon, ['fa-sun']);
+    break;
+
+    case 'Partly cloudy':
+      addStyles(icon, ['fa-cloud-sun']);
+    break;
+
+    case 'Mist':
+    case 'Cloudy':
+      addStyles(icon, ['fa-cloud']);
+    break;
+
+    case 'Patchy rain possible':
+    case 'Light rain':
+    case 'Moderate rain':
+      addStyles(icon, ['fa-cloud-rain']);
+    break;
+
+    case 'Heavy rain':
+    case 'Heavy rain at times':
+      addStyles(icon, ['fa-cloud-showers-heavy']);
+    break;
+
+    case 'Light snow':
+    case 'Moderate snow':
+    case 'Heavy snow':
+      addStyles(icon, ['fa-snowflake']);
+    break;
+
+    default:
+      addStyles(icon, ['fa-cloud']);
+    break;
+  };
+}
+
+export function clearForecasts() {
+  const weatherForecastDisplay = document.querySelector('#scroll-left-side');
+  const weatherTodayDisplay = document.querySelector('#scroll-right-side');
+  weatherForecastDisplay.innerHTML = '';
+  weatherTodayDisplay.innerHTML = '';
+}
+
 function addStyles(element, classesList) {
   classesList.forEach( classElement => {
     element.classList.add(classElement);
@@ -95,42 +140,8 @@ function renderFutureDay(dataForecast) {
   };
 
   const weatherCondition = dataForecast.day.condition.text;
-  switch(weatherCondition) {    
-    case 'Sunny':
-      addStyles(weatherIcon, ['fa-sun']);
-    break;
-
-    case 'Partly cloudy':
-      addStyles(weatherIcon, ['fa-cloud-sun']);
-    break;
-
-    case 'Mist':
-    case 'Cloudy':
-      addStyles(weatherIcon, ['fa-cloud']);
-    break;
-
-    case 'Patchy rain possible':
-    case 'Light rain':
-    case 'Moderate rain':
-      addStyles(weatherIcon, ['fa-cloud-rain']);
-    break;
-
-    case 'Heavy rain':
-    case 'Heavy rain at times':
-      addStyles(weatherIcon, ['fa-cloud-showers-heavy']);
-    break;
-
-    case 'Light snow':
-    case 'Moderate snow':
-    case 'Heavy snow':
-      addStyles(weatherIcon, ['fa-snowflake']);
-    break;
-
-    default:
-      addStyles(weatherIcon, ['fa-cloud']);
-    break;
-  };
-
+  
+  renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
   if(toggleMetric.checked) {
@@ -145,13 +156,6 @@ function renderFutureDay(dataForecast) {
   weatherNumber.appendChild(weatherMetric);
   weatherDiv.append(weatherNumber, weatherIcon, weekDayDisplay);
   weatherDisplay.appendChild(weatherDiv);
-}
-
-export function clearForecasts() {
-  const weatherForecastDisplay = document.querySelector('#scroll-left-side');
-  const weatherTodayDisplay = document.querySelector('#scroll-right-side');
-  weatherForecastDisplay.innerHTML = '';
-  weatherTodayDisplay.innerHTML = '';
 }
 
 function renderAllFutureDays(forecastArray) {
@@ -169,42 +173,7 @@ function renderTodayCard(hourData) {
   const dayTimeDisplay = createHTMLElement('p', null, ['week-day'], hourData.time.slice(-5));
 
   const weatherCondition = hourData.condition.text;
-  switch(weatherCondition) {    
-    case 'Sunny':
-      addStyles(weatherIcon, ['fa-sun']);
-    break;
-
-    case 'Partly cloudy':
-      addStyles(weatherIcon, ['fa-cloud-sun']);
-    break;
-
-    case 'Mist':
-    case 'Cloudy':
-      addStyles(weatherIcon, ['fa-cloud']);
-    break;
-
-    case 'Patchy rain possible':
-    case 'Light rain':
-    case 'Moderate rain':
-      addStyles(weatherIcon, ['fa-cloud-rain']);
-    break;
-
-    case 'Heavy rain':
-    case 'Heavy rain at times':
-      addStyles(weatherIcon, ['fa-cloud-showers-heavy']);
-    break;
-
-    case 'Light snow':
-    case 'Moderate snow':
-    case 'Heavy snow':
-      addStyles(weatherIcon, ['fa-snowflake']);
-    break;
-
-    default:
-      addStyles(weatherIcon, ['fa-cloud']);
-    break;
-  };
-
+  renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
   if(toggleMetric.checked) {
