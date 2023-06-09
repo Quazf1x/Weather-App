@@ -3,9 +3,16 @@ import { makeApiRequest } from "./modules/API.js";
 
 const toggleMetric = document.querySelector('#metric-toggle');
 
-const data = await makeApiRequest();
-setUpPage(data);
-toggleMetric.addEventListener('click', () => {
-  clearForecasts();
-  setUpPage(data)
-});
+async function initialLoad() {
+  const data = await makeApiRequest('Omsk');
+  setUpPage(data);
+
+  toggleMetric.addEventListener('click', () => {
+    clearForecasts();
+    setUpPage(data);
+  });
+}
+
+initialLoad();
+
+

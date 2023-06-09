@@ -1,7 +1,7 @@
 import '@fortawesome/fontawesome-free/css/solid.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
-import { parseISO, format, getDay } from 'date-fns';
-import { doc } from 'prettier';
+import { makeApiRequest } from './API';
+import { parseISO, getDay } from 'date-fns';
 
 const toggleMetric = document.querySelector('#metric-toggle');
 
@@ -14,6 +14,7 @@ export function setUpPage(data) {
     todaysHoursArray[0][20]
   ];
   addEventListeners();
+  clearForecasts();
   renderCurrentWeather(data);
   renderLocation(data.location);
   renderAllFutureDays(data.forecast.forecastday);
@@ -224,11 +225,13 @@ function renderTimeDetails(hourData) {
 
 }
 
-function addEventListeners() {
-  const searchButton = document.querySelector('#find-city-button');
-  const cityInput = document.querySelector('#find-city-input');
+export function addEventListeners() {
+  const searchBtn = document.querySelector('#find-city-button');
+  const searchInput = document.querySelector('#find-city-input')
 
-  searchButton.addEventListener('click', () => {
-    cityInput.focus();
+  searchBtn.addEventListener('click', async () => {
+    const data = await makeApiRequest(searchInput.value);
+    setUpPage(data);
   });
 };
+
