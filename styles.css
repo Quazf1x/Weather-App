@@ -213,6 +213,7 @@ body {
   align-items: center;
   justify-content: space-between;
   width: fit-content;
+  max-width: 20rem;
 }
 
 .location-wrapper > i {
@@ -238,20 +239,20 @@ body {
   font-size: 1.2rem;
   height: 2.3rem;
   width: 100%;
-  transform: scaleX(0) translateX(5rem);
+  /* transform: scaleX(0) translateX(5rem); */
   transition: all ease-in-out .25s;
 }
 
-#find-city-input:focus {
-  outline: none;
-  transform: scaleX(1) translateX(0);
+ #find-city-input:focus {
+  outline: none;                      
+  /* transform: scaleX(1) translateX(0);  had to comment out this nice animation. because i can't figure out how to make it work with user-friendly search button... */
 }
-
+ /*
 #find-city-input:focus ~ #find-city-button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   right: 0;
-}
+} */
 
 #find-city-button {
   background-color: var(--transparent-purple);
@@ -260,9 +261,10 @@ body {
   color: var(--white);
   cursor: pointer;
   font-size: 1.95rem;
+  margin-left: .5rem;
   padding: 0 .5rem;
   position: absolute;
-  right: 30%;
+  /* right: 30%; */
   transition: all .25s;
 }
 
