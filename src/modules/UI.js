@@ -13,7 +13,6 @@ export function setUpPage(data) {
     todaysHoursArray[0][16],
     todaysHoursArray[0][20]
   ];
-  addEventListeners();
   clearForecasts();
   renderCurrentWeather(data);
   renderLocation(data.location);
@@ -166,7 +165,7 @@ function renderAllFutureDays(forecastArray) {
   })
 };
 
-function renderTodayCard(hourData) {
+function renderTodayCard(hourData, index) {
   const weatherDisplay = document.querySelector('#scroll-right-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
   const weatherNumber = createHTMLElement('p', null, null, null);
@@ -187,14 +186,19 @@ function renderTodayCard(hourData) {
     weatherMetric.textContent = ' C';
   };
 
+  weatherDiv.addEventListener('click', () => {
+    setActiveTimeTab(weatherDiv, true);
+    renderTimeDetails(hourData);
+  });
+
   weatherNumber.appendChild(weatherMetric);
   weatherDiv.append(dayTimeDisplay, weatherIcon, weatherNumber);
   weatherDisplay.appendChild(weatherDiv);
 }
 
 function renderTodaysForecast(timeArray) {
-  timeArray.forEach(time => {
-    renderTodayCard(time);
+  timeArray.forEach((time,index) => {
+    renderTodayCard(time, index);
   })
 }
 
@@ -204,6 +208,22 @@ function renderLocation(locationData) {
 
   cityDisplay.textContent = locationData.name;
   countryDisplay.textContent = locationData.country;
+}
+
+function setActiveTimeTab(neededTab, isToday) {
+  let tabsArray;
+  if(isToday) 
+    tabsArray = document.querySelectorAll('#scroll-right-side .weather-day-div');
+  else 
+    tabsArray = document.querySelectorAll('#scroll-left-side .weather-day-div');
+
+    tabsArray.forEach(tab => {
+      if(tab !== neededTab) {
+        tab.classList.remove('chosen-div');
+      } 
+      else tab.classList.add('chosen-div');
+    })
+  
 }
 
 function renderTimeDetails(hourData) {
@@ -222,16 +242,4 @@ function renderTimeDetails(hourData) {
   else {
     windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
   }
-
 }
-
-export function addEventListeners() {
-  const searchBtn = document.querySelector('#find-city-button');
-  const searchInput = document.querySelector('#find-city-input')
-
-  searchBtn.addEventListener('click', async () => {
-    const data = await makeApiRequest(searchInput.value);
-    setUpPage(data);
-  });
-};
-

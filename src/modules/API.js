@@ -3,6 +3,6 @@ export async function makeApiRequest(location) {
     mode: 'cors'
   });
   let data = await request.json();
-  // console.log(data)
+   console.log(data);
   return data; 
 }
