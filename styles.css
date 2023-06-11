@@ -175,8 +175,12 @@ body {
   transition: .2s;
 }
 
-.weather-day-div:hover {
+.chosen-div {
   box-shadow: inset 0 0 5px var(--white);
+}
+
+.weather-day-div:hover {
+  box-shadow:  0 0 10px #00000050;
 }
 
 .scroll-wrapper::-webkit-scrollbar {
@@ -301,6 +305,7 @@ body {
   flex-direction: column;
   font-size: 1.5rem;
 }
+
 
 @media only screen and (max-width:950px) {
 
