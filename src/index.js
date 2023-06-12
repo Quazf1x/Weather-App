@@ -1,4 +1,4 @@
-import { setUpPage, clearForecasts } from "./modules/UI.js";
+import { setUpPage, toggleMetricSystem } from "./modules/UI.js";
 import { makeApiRequest } from "./modules/API.js";
 
 async function initialLoad() {
@@ -7,8 +7,11 @@ async function initialLoad() {
   setUpPage(data);
 
   toggleMetric.addEventListener('click', () => {
-    clearForecasts();
-    setUpPage(data);
+    if(toggleMetric.checked){
+      toggleMetricSystem(data, true);
+    } else {
+      toggleMetricSystem(data, false);
+    }
   });
 
   const searchBtn = document.querySelector('#find-city-button');

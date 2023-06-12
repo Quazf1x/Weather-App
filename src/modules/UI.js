@@ -1,9 +1,9 @@
 import '@fortawesome/fontawesome-free/css/solid.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
-import { makeApiRequest } from './API';
 import { parseISO, getDay } from 'date-fns';
 
 const toggleMetric = document.querySelector('#metric-toggle');
+
 
 export function setUpPage(data) {
   const todaysHoursArray = [data.forecast.forecastday[0].hour];
@@ -87,7 +87,6 @@ function addStyles(element, classesList) {
 function renderCurrentWeather(data) {
   const currentDegreeDisplay = document.querySelector('.current-degree');
   const currentDateDisplay = document.querySelector('.current-date');
-  const currentMetric = document.querySelector('.current-metric');
   const currentWindDisplay = document.querySelector('.wind-value');
   const currentHumDisplay = document.querySelector('.humidity-value');
   const currentRainDisplay = document.querySelector('.rain-value');
@@ -95,23 +94,15 @@ function renderCurrentWeather(data) {
   currentDateDisplay.textContent = data.current.last_updated.replace(/-/g, '.').slice(0,-5);
   currentHumDisplay.textContent = `${data.current.humidity} %`;
   currentRainDisplay.textContent = `${data.forecast.forecastday[0].day.daily_chance_of_rain} %`; // ???
-  if(toggleMetric.checked) {
-    currentMetric.textContent = 'F';
-    currentDegreeDisplay.textContent = Math.floor(data.current.temp_f);
-    currentWindDisplay.textContent = `${Math.floor(data.current.wind_mph)} Mph`;
-  }
-  else {
-    currentMetric.textContent = 'C';
-    currentDegreeDisplay.textContent = Math.floor(data.current.temp_c);
-    currentWindDisplay.textContent = `${Math.floor(data.current.wind_kph)} km/h`;
-  }
+  
+  currentDegreeDisplay.textContent = `${Math.floor(data.current.temp_c)} C`;
+  currentWindDisplay.textContent = `${Math.floor(data.current.wind_kph)} km/h`;
 }
 
 function renderFutureDay(dataForecast) {
   const weatherDisplay = document.querySelector('#scroll-left-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
-  const weatherNumber = createHTMLElement('p', null, null, null);
-  const weatherMetric = createHTMLElement('span', null, ['current-metric']);
+  const weatherNumber = createHTMLElement('p', null, ['weather'], null);
   const weatherIcon = createHTMLElement('i', null, ['fa-solid', 'fa-xl'], null);
   const weekDayDisplay = createHTMLElement('p', null, ['week-day'], null);
 
@@ -145,16 +136,8 @@ function renderFutureDay(dataForecast) {
   renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
-  if(toggleMetric.checked) {
-    weatherNumber.textContent = Math.floor(dataForecast.day.avgtemp_f);
-    weatherMetric.textContent = ' F';
-  }
-  else {
-    weatherNumber.textContent = Math.floor(dataForecast.day.avgtemp_c);
-    weatherMetric.textContent = ' C';
-  };
+  weatherNumber.textContent = `${Math.floor(dataForecast.day.avgtemp_c)} C`;
 
-  weatherNumber.appendChild(weatherMetric);
   weatherDiv.append(weatherNumber, weatherIcon, weekDayDisplay);
   weatherDisplay.appendChild(weatherDiv);
 }
@@ -168,8 +151,7 @@ function renderAllFutureDays(forecastArray) {
 function renderTodayCard(hourData, index) {
   const weatherDisplay = document.querySelector('#scroll-right-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
-  const weatherNumber = createHTMLElement('p', null, null, null);
-  const weatherMetric = createHTMLElement('span', null, ['current-metric']);
+  const weatherNumber = createHTMLElement('p', null, ['weather'], null);
   const weatherIcon = createHTMLElement('i', null, ['fa-solid', 'fa-xl'], null);
   const dayTimeDisplay = createHTMLElement('p', null, ['week-day'], hourData.time.slice(-5));
 
@@ -177,21 +159,13 @@ function renderTodayCard(hourData, index) {
   renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
-  if(toggleMetric.checked) {
-    weatherNumber.textContent = Math.floor(hourData.temp_f);
-    weatherMetric.textContent = ' F';
-  }
-  else {
-    weatherNumber.textContent = Math.floor(hourData.temp_c);
-    weatherMetric.textContent = ' C';
-  };
+  weatherNumber.textContent = `${Math.floor(hourData.temp_c)} C`;
 
   weatherDiv.addEventListener('click', () => {
     setActiveTimeTab(weatherDiv, true);
     renderTimeDetails(hourData);
   });
 
-  weatherNumber.appendChild(weatherMetric);
   weatherDiv.append(dayTimeDisplay, weatherIcon, weatherNumber);
   weatherDisplay.appendChild(weatherDiv);
 }
@@ -224,7 +198,36 @@ function setActiveTimeTab(neededTab, isToday) {
       else tab.classList.add('chosen-div');
     })
   
-}
+};
+
+export function toggleMetricSystem(data, isFahrenheit) {
+  const displayHours = [8, 12, 16, 20];
+
+  const currentWeather = document.querySelector('.current-degree');
+  if(isFahrenheit){
+    currentWeather.textContent = `${Math.floor(data.current.temp_f)} F`;
+  } else {
+    currentWeather.textContent = `${Math.floor(data.current.temp_c)} C`;
+  };
+      
+  const forecastWeathers = document.querySelectorAll('#scroll-left-side .weather');
+  forecastWeathers.forEach((forecast, index) => {
+    if(isFahrenheit) {
+      forecast.textContent = `${Math.floor(data.forecast.forecastday[index].day.avgtemp_f)} F`;
+    } else {
+      forecast.textContent = `${Math.floor(data.forecast.forecastday[index].day.avgtemp_c)} C`;
+    };
+  });
+
+  const todayWeathers = document.querySelectorAll('#scroll-right-side .weather');
+  todayWeathers.forEach((weather, index) => {
+    if(isFahrenheit) {
+      weather.textContent = `${Math.floor(data.forecast.forecastday[0].hour[displayHours[index]].temp_f)} F`;
+    } else {
+      weather.textContent = `${Math.floor(data.forecast.forecastday[0].hour[displayHours[index]].temp_c)} C`;
+    }
+  });
+};
 
 function renderTimeDetails(hourData) {
   const humidityDisplay = document.querySelector('.set-time-humidity');
