@@ -1,4 +1,4 @@
-import { setUpPage, toggleMetricSystem } from "./modules/UI.js";
+import { setUpPage, togglePageSystem } from "./modules/UI.js";
 import { makeApiRequest } from "./modules/API.js";
 
 async function initialLoad() {
@@ -8,9 +8,9 @@ async function initialLoad() {
 
   toggleMetric.addEventListener('click', () => {
     if(toggleMetric.checked){
-      toggleMetricSystem(data, true);
+      togglePageSystem(data, true);
     } else {
-      toggleMetricSystem(data, false);
+      togglePageSystem(data, false);
     }
   });
 

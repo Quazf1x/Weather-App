@@ -2,9 +2,6 @@ import '@fortawesome/fontawesome-free/css/solid.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import { parseISO, getDay } from 'date-fns';
 
-const toggleMetric = document.querySelector('#metric-toggle');
-
-
 export function setUpPage(data) {
   const todaysHoursArray = [data.forecast.forecastday[0].hour];
   const displayHours = [
@@ -200,7 +197,7 @@ function setActiveTimeTab(neededTab, isToday) {
   
 };
 
-export function toggleMetricSystem(data, isFahrenheit) {
+export function togglePageSystem(data, isFahrenheit) {
   const displayHours = [8, 12, 16, 20];
 
   const currentWeather = document.querySelector('.current-degree');
@@ -225,8 +222,15 @@ export function toggleMetricSystem(data, isFahrenheit) {
       weather.textContent = `${Math.floor(data.forecast.forecastday[0].hour[displayHours[index]].temp_f)} F`;
     } else {
       weather.textContent = `${Math.floor(data.forecast.forecastday[0].hour[displayHours[index]].temp_c)} C`;
-    }
+    };
   });
+
+  // const currentWindValue = document.querySelector('.wind-value');
+  // if(isFahrenheit) {
+  //   currentWindValue.textContent = `${Math.floor(data.current.wind_mph)} mph`;
+  // } else {
+  //   currentWindValue.textContent = `${Math.floor(data.current.wind_kph)} km/h`;
+  // };
 };
 
 function renderTimeDetails(hourData) {
@@ -238,11 +242,5 @@ function renderTimeDetails(hourData) {
   rainChanceDisplay.textContent = `${hourData.chance_of_rain} %`
   humidityDisplay.textContent = `${hourData.humidity} %`;
   windDirDisplay.textContent = hourData.wind_dir;
-
-  if(toggleMetric.checked) {
-    windSpeedDisplay.textContent = `${hourData.wind_mph} mph`;
-  }
-  else {
-    windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
-  }
+  windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
 }
