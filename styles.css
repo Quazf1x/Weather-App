@@ -36,7 +36,7 @@ body {
 }
 
 .scroll-snap > * {
-  scroll-snap-align: start;
+  scroll-snap-align: center;
 }
 
 /*Left side header*/
@@ -156,7 +156,7 @@ body {
   white-space: nowrap;
   width: 28rem;
   margin-top: 5rem;
-  padding-bottom: 1rem;
+  padding: 1rem 0 1rem 1rem;
 }
 
 .weather-day-div {
