@@ -39,6 +39,10 @@ body {
   scroll-snap-align: center;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 /*Left side header*/
 
 .wrapper {
@@ -279,6 +283,10 @@ body {
   transition: all .25s;
 }
 
+.error-message {
+  font-weight: 400;
+  position: absolute;
+}
 
 #scroll-right-side {
   width: 70%;
