@@ -322,7 +322,6 @@ body {
 }
 
 @media only screen and (max-width:950px) {
-
   body {
   overflow:unset;
   height: 100%;
@@ -333,12 +332,30 @@ body {
     grid-template: 1fr 1fr / 100%;
   }
 
+
   .misc-info {
     width: 100%;
   }
 
   .scroll-wrapper {
     width: 100%;
+  }
+
+  #find-city-button {
+    right: 0;
+  }
+
+  .current-location {
+    font-size: 1rem;
+  }
+
+  .location-wrapper {
+    justify-content: flex-start;
+    width: 50%;
+  }
+
+  .find-city-wrapper {
+    width: 40%;
   }
 
   #scroll-right-side {
