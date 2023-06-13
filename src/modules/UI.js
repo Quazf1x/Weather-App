@@ -99,9 +99,10 @@ function renderCurrentWeather(data) {
 function renderFutureDay(dataForecast) {
   const weatherDisplay = document.querySelector('#scroll-left-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
-  const weatherNumber = createHTMLElement('p', null, ['weather'], null);
+  const weatherNumber = createHTMLElement('p', null, ['weather'], `${Math.floor(dataForecast.day.avgtemp_c)} C`);
   const weatherIcon = createHTMLElement('i', null, ['fa-solid', 'fa-xl'], null);
   const weekDayDisplay = createHTMLElement('p', null, ['week-day'], null);
+  const weekDate = createHTMLElement('span', null, ['forecast-day'], dataForecast.date.replaceAll('-', '.'));
 
   const weekDay = getDay(parseISO(dataForecast.date));
   switch(weekDay) {
@@ -133,9 +134,7 @@ function renderFutureDay(dataForecast) {
   renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
-  weatherNumber.textContent = `${Math.floor(dataForecast.day.avgtemp_c)} C`;
-
-  weatherDiv.append(weatherNumber, weatherIcon, weekDayDisplay);
+  weatherDiv.append(weatherNumber, weatherIcon, weekDayDisplay, weekDate);
   weatherDisplay.appendChild(weatherDiv);
 }
 
@@ -145,7 +144,7 @@ function renderAllFutureDays(forecastArray) {
   })
 };
 
-function renderTodayCard(hourData, index) {
+function renderTodayCard(hourData) {
   const weatherDisplay = document.querySelector('#scroll-right-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
   const weatherNumber = createHTMLElement('p', null, ['weather'], null);
@@ -168,8 +167,8 @@ function renderTodayCard(hourData, index) {
 }
 
 function renderTodaysForecast(timeArray) {
-  timeArray.forEach((time,index) => {
-    renderTodayCard(time, index);
+  timeArray.forEach((time) => {
+    renderTodayCard(time);
   })
 }
 
