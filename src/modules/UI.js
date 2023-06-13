@@ -2,20 +2,17 @@ import '@fortawesome/fontawesome-free/css/solid.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import { parseISO, getDay } from 'date-fns';
 
+const displayHours = [8, 12, 16, 20];
+
 export function setUpPage(data) {
-  const todaysHoursArray = [data.forecast.forecastday[0].hour];
-  const displayHours = [
-    todaysHoursArray[0][8],
-    todaysHoursArray[0][12],
-    todaysHoursArray[0][16],
-    todaysHoursArray[0][20]
-  ];
+  const todaysHoursArray = data.forecast.forecastday[0].hour;
+
   clearForecasts();
   renderCurrentWeather(data);
   renderLocation(data.location);
   renderAllFutureDays(data.forecast.forecastday);
-  renderTodaysForecast(displayHours);
-  renderTimeDetails(todaysHoursArray[0][8]);
+  renderTodaysForecast(displayHours, todaysHoursArray);
+  renderTimeDetails(todaysHoursArray[8]);
 };
 
 function createHTMLElement(type, id, classesList, content) {
@@ -138,38 +135,26 @@ function renderFutureDay(dataForecast) {
   weatherDisplay.appendChild(weatherDiv);
 }
 
-function renderAllFutureDays(forecastArray) {
-  forecastArray.forEach(forecast => {
-    renderFutureDay(forecast);
-  })
-};
-
-function renderTodayCard(hourData) {
+function renderTodayCard(hour, data) {
   const weatherDisplay = document.querySelector('#scroll-right-side');
   const weatherDiv = createHTMLElement('div', null, ['weather-day-div'], null);
   const weatherNumber = createHTMLElement('p', null, ['weather'], null);
   const weatherIcon = createHTMLElement('i', null, ['fa-solid', 'fa-xl'], null);
-  const dayTimeDisplay = createHTMLElement('p', null, ['week-day'], hourData.time.slice(-5));
+  const dayTimeDisplay = createHTMLElement('p', null, ['week-day'], data[hour].time.slice(-5));
 
-  const weatherCondition = hourData.condition.text;
+  const weatherCondition = data[hour].condition.text;
   renderWeatherIcons(weatherCondition, weatherIcon);
   weatherIcon.style.color = 'white';
 
-  weatherNumber.textContent = `${Math.floor(hourData.temp_c)} C`;
+  weatherNumber.textContent = `${Math.floor(data[hour].temp_c)} C`;
 
   weatherDiv.addEventListener('click', () => {
     setActiveTimeTab(weatherDiv, true);
-    renderTimeDetails(hourData);
+    renderTimeDetails(data[hour]);
   });
 
   weatherDiv.append(dayTimeDisplay, weatherIcon, weatherNumber);
   weatherDisplay.appendChild(weatherDiv);
-}
-
-function renderTodaysForecast(timeArray) {
-  timeArray.forEach((time) => {
-    renderTodayCard(time);
-  })
 }
 
 function renderLocation(locationData) {
@@ -192,12 +177,22 @@ function setActiveTimeTab(neededTab, isToday) {
         tab.classList.remove('chosen-div');
       } 
       else tab.classList.add('chosen-div');
-    })
-  
+    });
 };
 
+function renderTimeDetails(hourData) {
+  const humidityDisplay = document.querySelector('.set-time-humidity');
+  const rainChanceDisplay = document.querySelector('.set-time-rain');
+  const windSpeedDisplay = document.querySelector('.set-time-wind');
+  const windDirDisplay = document.querySelector('.set-wind-dir');
+
+  rainChanceDisplay.textContent = `${hourData.chance_of_rain} %`
+  humidityDisplay.textContent = `${hourData.humidity} %`;
+  windDirDisplay.textContent = hourData.wind_dir;
+  windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
+}
+
 export function togglePageSystem(data, isFahrenheit) {
-  const displayHours = [8, 12, 16, 20];
 
   const currentWeather = document.querySelector('.current-degree');
   if(isFahrenheit){
@@ -223,23 +218,16 @@ export function togglePageSystem(data, isFahrenheit) {
       weather.textContent = `${Math.floor(data.forecast.forecastday[0].hour[displayHours[index]].temp_c)} C`;
     };
   });
-
-  // const currentWindValue = document.querySelector('.wind-value');
-  // if(isFahrenheit) {
-  //   currentWindValue.textContent = `${Math.floor(data.current.wind_mph)} mph`;
-  // } else {
-  //   currentWindValue.textContent = `${Math.floor(data.current.wind_kph)} km/h`;
-  // };
 };
 
-function renderTimeDetails(hourData) {
-  const humidityDisplay = document.querySelector('.set-time-humidity');
-  const rainChanceDisplay = document.querySelector('.set-time-rain');
-  const windSpeedDisplay = document.querySelector('.set-time-wind');
-  const windDirDisplay = document.querySelector('.set-wind-dir');
-
-  rainChanceDisplay.textContent = `${hourData.chance_of_rain} %`
-  humidityDisplay.textContent = `${hourData.humidity} %`;
-  windDirDisplay.textContent = hourData.wind_dir;
-  windSpeedDisplay.textContent = `${hourData.wind_kph} km/h`
+function renderTodaysForecast(timeArray, data) {
+  timeArray.forEach((time) => {
+    renderTodayCard(time, data);
+  })
 }
+
+function renderAllFutureDays(forecastArray) {
+  forecastArray.forEach(forecast => {
+    renderFutureDay(forecast);
+  })
+};

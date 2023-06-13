@@ -2,9 +2,10 @@ import { setUpPage, togglePageSystem } from "./modules/UI.js";
 import { makeApiRequest } from "./modules/API.js";
 
 async function initialLoad() {
-  const toggleMetric = document.querySelector('#metric-toggle');
-  const data = await makeApiRequest('Omsk');
+  const data = await makeApiRequest('Los-Angeles');
   setUpPage(data);
+
+  const toggleMetric = document.querySelector('#metric-toggle');
 
   toggleMetric.addEventListener('click', () => {
     if(toggleMetric.checked){
